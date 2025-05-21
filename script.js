@@ -1,4 +1,4 @@
-// const button1 = document.getElementById('button1')
+const button1 = document.getElementById('button1')
 const audioFile = document.getElementById('audio-input')
 const audioPlayer = document.getElementById('audio-player')
 let audioURL = null
@@ -13,6 +13,15 @@ const ctx = canvas.getContext('2d')
 let audioSource
 let analyser
 
+function setupAudioNodes() {
+    if(!audioSource) {
+        audioSource = audioCtx.createMediaElementSource(audioPlayer)
+        analyser = audioCtx.createAnalyser()
+        audioSource.connect(analyser)
+        analyser.connect(audioCtx.destination)
+        analyser.fftSize = 2048
+    }
+}
 
 audioFile.addEventListener('change', (event) => {
     const file = event.target.files[0]
@@ -26,49 +35,48 @@ audioFile.addEventListener('change', (event) => {
         audioPlayer.src = audioURL
 })
 
-// button1.addEventListener('click', () => {
-//     if (audioPlayer.src) {
-//         audioPlayer.play().catch(e => console.error('Error playing audio:', e))
-//         audioPlayer.addEventListener('playing', function() {
-//             console.log('Audio is playing')
-//         })
-//         audioPlayer.addEventListener('ended', function() {
-//             console.log('Audio has ended')
-//         })
-//     }
-//     else {
-//         console.alert('Upload an audio file first')
-//     }
+button1.addEventListener('click', () => {
+    if (audioPlayer.src) {
+        audioPlayer.play().catch(e => console.error('Error playing audio:', e))
+        audioPlayer.addEventListener('playing', function() {
+            console.log('Audio is playing')
+        })
+        audioPlayer.addEventListener('ended', function() {
+            console.log('Audio has ended')
+        })
+    }
+    else {
+        console.alert('Upload an audio file first')
+    }
         
-// })
+})
 
 container.addEventListener('click', () => {
-    audioPlayer.play()
-    audioSource = audioCtx.createMediaElementSource(audioPlayer)
-    analyser = audioCtx.createAnalyser()
-    audioSource.connect(analyser)
-    analyser.connect(audioCtx.destination)
-    analyser.fftSize = 256
+    if (audioPlayer.src) {
+        audioPlayer.play().catch(e => console.error('Error playing audio:', e))
+        setupAudioNodes()
+        animate()
+    }
+    else {
+        alert('Uplaod an audio file first')
+    }
+})
+
+function animate() {
     const bufferLength = analyser.frequencyBinCount
     const dataArray = new Uint8Array(bufferLength)
-
     const barWidth = canvas.width/bufferLength
     let barHeight
-    let x
-
-    function animate() {
-        x = 0
-        ctx.clearRect(0, 0, canvas.width, canvas.height)
-        analyser.getByteFrequencyData(dataArray) 
-        for(let i = 0; i < bufferLength; i++) {
-            barHeight = dataArray[i]
-            ctx.fillStlye = 'white'
-            ctx.fillRect(x, canvas.height - barHeight, barWidth, barHeight)
-            x += barWidth
-        }
-        requestAnimationFrame(animate)
+    let x = 0
+    ctx.clearRect(0, 0, canvas.width, canvas.height)
+    analyser.getByteFrequencyData(dataArray) 
+    for(let i = 0; i < bufferLength; i++) {
+        barHeight = dataArray[i] * 2
+        ctx.fillStyle = 'pink'
+        ctx.fillRect(x, canvas.height - barHeight, barWidth, barHeight)
+        x += barWidth
     }
-    animate()
-})
+    requestAnimationFrame(animate)
+}
 
 
