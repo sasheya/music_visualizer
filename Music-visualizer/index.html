@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaScript sound effects</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined&opsz,wght,FILL,GRAD@20,100,1,200">
+    <link rel="stylesheet" href="/src/style.css">
+</head>
+<body> 
+    <div id="container">
+        <canvas id="canvas-sound"></canvas>
+        <div id="player-container">
+            <div id="player-controls">
+                <span id="prev" class="material-symbols-outlined">arrow_back_ios_new</span>
+                <div id="play-button">
+                    <i id="play" class="material-symbols-outlined">play_circle</i> 
+                </div>
+                <span id="next" class="material-symbols-outlined">arrow_forward_ios</span>
+            </div>
+            <div id="progress-container">
+                <div id="song">
+                    <p id="song-name-text"></p>
+                    <p id="song-artist-text"></p>
+                </div>
+                <div id="progress-bar-container">
+                    <span class="time" id="current-time">0:00</span>
+                    <div id="progress-bar">
+                        <div id="progress-fill"></div>
+                    </div>
+                    <span class="time" id="duration">0:00</span>
+                </div>
+            </div>
+            <div id="menu">
+                <div id="toggle-menu">
+                    <div id="album-cover"></div>
+                    <p class="toggle-info" id="album-name">album</p>
+                    <!-- <p class="toggle-info" id="artist-name">artist</p> -->
+                </div>
+                <div id="main-menu">
+                    <span id="menu-btn" class="material-symbols-outlined">unfold_more</span>
+                    <div id="controls"><p>controls</p></div>
+                </div>
+            </div>
+        </div>
+
+    <script src="/src/player.js" type="module"></script>
+    <script src="/src/visualizer.js" type="module"></script>
+</body>
+</html>

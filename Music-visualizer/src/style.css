@@ -1,0 +1,233 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    
+}
+
+body {
+    width: 100vw;
+    height: 100vh;
+}
+
+#container {
+    position: absolute;
+    background-image: linear-gradient(to bottom, #000000, #000000);
+    background-size: cover;
+    background-repeat: no-repeat;
+    filter: drop-shadow(0px 0px 10px #000000);
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    color: #ffffff;
+}
+
+
+#sound-input {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    gap: 10px;
+    z-index: 100;
+    opacity: 0;
+}
+
+#sound-input:hover {
+    opacity: 1;
+}
+
+#canvas-sound {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+#player-container {
+    opacity: 0;
+    height: 50%;
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    z-index: 100;
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-end;
+    /* background-color: #000000; */
+}
+
+#player-container:hover {
+    opacity: 1;
+    
+}
+
+#player-controls {
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 40px 50px;
+    width: 20%;
+    height: 60%;
+    /* background: green; */
+}
+
+#player-controls span{
+    display: none;
+}
+
+#player-container:hover #player-controls span {
+    display: block;
+    font-size: 2.5rem;
+    transition: all 0.3s ease-in-out;
+}
+
+#player-controls #play-button i{
+    font-size: 5rem;
+}
+
+#player-controls #play-button #pause{
+    display: none;
+} 
+
+#progress-container{
+    position: relative;
+    width: 60%;
+    height: 60%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    /* background: blue; */
+    padding: 20px 20px;
+    gap: 10px;
+}
+
+#song {
+    height: 40%;
+    padding: 0 20px;
+    font-weight: 300;
+
+}
+
+#song-name-text{
+    font-size: 2rem;
+    /* padding: 10px; */
+}
+
+#song-name-info {
+    font-size: 1.5rem;
+}
+
+#progress-bar-container {
+    width: 100%;
+    height: 50%;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+#progress-container #progress-bar {
+    width: 100%;
+    background-color: #505050;
+    border-radius: 20px;
+    cursor: pointer;
+}
+
+#progress-container #progress-bar #progress-fill {
+    width: 10%;
+    height: 6px; 
+    border-radius: 20px;
+    background: #d8e4dc;
+    transition: width 0.1s ease-in-out;
+    box-shadow: 1px 1px 5px #d8e4dc;
+}
+
+#progress-container #progress-bar #progress-fill:hover {
+    height: 8px;
+}
+
+#progress-container span {
+    font-size: 15px;
+    color: #ffffff;
+    padding: 0px 15px;
+    /* background: yellow; */
+}
+
+#menu {
+    cursor: pointer;
+    position: relative;
+    width: 20%;
+    height: 100%;
+    /* background: red; */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 10px;
+}
+
+#main-menu {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: flex-end;
+    width: 100%;
+    height: 100%;
+    font-size: 30px;
+    
+}
+
+#main-menu span {
+    cursor: pointer;
+    font-size: 3rem;
+    transition: all 0.3s ease-in-out;
+}
+
+#toggle-menu {
+    display: none;
+}
+
+#toggle-menu.active {
+    transition: all 0.3s ease-in-out;
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    width: 80%;
+    height: 100%;
+    /* background: #303030; */
+    margin: 20px 20px;
+    
+}
+
+#album-cover {
+    width: 200px;
+    height: 200px;
+    /* background-color: red; */
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.toggle-info{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 10%;
+    overflow: hidden;
+}
+
+
+
+
+
