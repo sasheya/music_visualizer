@@ -43,7 +43,8 @@ const trackList = [
     },
     ]
 
-const containerWin = document.querySelector('#container')
+const container = document.querySelector('#container')
+const backgroundImageDiv = document.querySelector('#background-image'); // Get reference to the new div
 const artistName = document.querySelector('#song-artist-text')
 const songName = document.querySelector('#song-name-text')
 const fillBar = document.querySelector('#progress-fill')
@@ -56,9 +57,12 @@ const playBtn = document.getElementById('play')
 const prevBtn = document.getElementById('prev')
 const nextBtn = document.getElementById('next')
 const prog = document.getElementById('progress-bar')
-const toggleMenu = document.getElementById('toggle-menu')
+export const toggleMenu = document.getElementById('toggle-menu')
 const toggleBtn = document.getElementById('menu-btn')
-
+const searchBtn = document.getElementById('search-btn')
+const searchInput = document.getElementById('search-query')
+const searchContainer = document.getElementById('search-container')
+const searchResultsDiv = document.getElementById('search-results')
 
 export let song = new Audio() // Export the song object
 export let currentSong = 0
@@ -76,7 +80,20 @@ document.addEventListener('DOMContentLoaded', () => {
     playBtn.addEventListener('click', togglePlayPause)
     prog.addEventListener('click', seek)
     toggleBtn.addEventListener('click', toggleMenuVisibility)
+    searchBtn.addEventListener('click', searchInputVisibility)
+    searchInput.addEventListener('input', handleSearchInput); // Use 'input' event for real-time search
+    searchInput.addEventListener('keypress', handleSearchKeyPress); // Handle Enter key press
 })
+
+function handleSearchInput() {
+    search(searchInput.value);
+}
+
+function handleSearchKeyPress(event) {
+    if (event.key === 'Enter') {
+        search(searchInput.value);
+    }
+}
 
 function loadSong(index) {
     const { name, artist, album, src, cover: thumb, albumCover } = trackList[index]
@@ -89,10 +106,7 @@ function loadSong(index) {
 
     // Add this check: If the menu is active, update the container background
     if (toggleMenu.classList.contains('active')) {
-        containerWin.style.backgroundImage = `url(${albumCover})` // Use the albumCover of the newly loaded song
-        containerWin.style.backgroundSize = 'cover'
-        containerWin.style.backgroundPosition = 'center'
-        containerWin.style.backgroundRepeat = 'no-repeat'
+        backgroundImageDiv.style.backgroundImage = `url(${albumCover})` // Use the albumCover of the newly loaded song
     }
 }
 
@@ -156,15 +170,65 @@ function seek(e) {
 
 function toggleMenuVisibility() {
     toggleMenu.classList.toggle('active')
+    searchContainer.classList.toggle('hidden-search')
 
     if (toggleMenu.classList.contains('active')) {
-    const currentSongUrl = trackList[currentSong].albumCover
-    containerWin.style.backgroundImage = `url(${currentSongUrl})`
-    containerWin.style.backgroundSize = 'cover'
-    containerWin.style.backgroundPosition = 'center'
-    containerWin.style.backgroundRepeat = 'no-repeat'
+        document.body.classList.add('menu-open'); // Add class to body
+        const currentSongUrl = trackList[currentSong].albumCover
+        backgroundImageDiv.style.backgroundImage = `url(${currentSongUrl})` // Set background on the new div
     }
     else {
-        containerWin.style.backgroundImage = 'none'
+        document.body.classList.remove('menu-open'); // Remove class from body
+        backgroundImageDiv.style.backgroundImage = '' // Clear background on the new div
+    }
+}
+
+function searchInputVisibility() {
+    searchInput.classList.toggle('active')
+}
+
+function search(query) {
+    searchResultsDiv.innerHTML = ''
+    if(query.trim() === '') {
+        return
+    }
+
+    // Add this check
+    if (typeof query !== 'string') {
+        console.error('Search query is not a string:', query);
+        return; // Or handle the error appropriately
+    }
+
+    const filteredTracks = trackList.filter(track => {
+        if (!(track && typeof track.name === 'string' && typeof track.artist === 'string')) {
+            // Throw a more informative error
+            throw new Error(`Invalid track data: track=${track}, track.name=${track ? track.name : 'undefined'}, track.artist=${track ? track.artist : 'undefined'}`);
+        }
+        return (track.name.toLowerCase().includes(query.toLowerCase()) || track.artist.toLowerCase().includes(query.toLowerCase()));
+    });
+
+    const searchResultTemplate = document.getElementById('search-result-template'); // Get the template
+
+    if (filteredTracks.length > 0) {
+        filteredTracks.forEach((track , index) => {
+            const resultElement = searchResultTemplate.content.cloneNode(true).children[0]; // Clone template content
+            resultElement.querySelector('.track-name').textContent = track.name; // Populate track name
+            resultElement.querySelector('.track-artist').textContent = track.artist; // Populate track artist
+
+            resultElement.addEventListener('click', () => {
+                const trackIndex = trackList.findIndex(t => t.src === track.src)
+                if (trackIndex !== -1) {
+                    currentSong = trackIndex
+                    playMusic()
+                    searchInput.value = ''
+                    searchResultsDiv.innerHTML = ''
+                    searchInput.classList.remove('active')
+                }
+            })
+            searchResultsDiv.append(resultElement)
+        })
+    }
+    else {
+        searchResultsDiv.innerHTML = '<p>No results found</p>'
     }
 }

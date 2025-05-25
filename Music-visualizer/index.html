@@ -7,9 +7,24 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined&opsz,wght,FILL,GRAD@20,100,1,200">
     <link rel="stylesheet" href="/src/style.css">
 </head>
-<body> 
+<body>
     <div id="container">
+        <div id="background-image"></div> <!-- New background image div -->
         <canvas id="canvas-sound"></canvas>
+        <nav>
+            <div id="search-container">
+                <div class="search-input-container"> 
+                    <label id="search-btn" for="search-query"><span id="search" class="material-symbols-outlined">search</span></label>
+                    <input placeholder="Search..." name="search-query" id="search-query" type="text">
+                </div>
+                <div id="search-results"></div>
+                <template id="search-result-template">
+                  <div class="search-result-item">
+                    <p class="track-info"><span class="track-name"></span> - <span class="track-artist"></span></p>
+                  </div>
+                </template>
+            </div>
+        </nav>
         <div id="player-container">
             <div id="player-controls">
                 <span id="prev" class="material-symbols-outlined">arrow_back_ios_new</span>

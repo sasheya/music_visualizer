@@ -1,5 +1,6 @@
+import { toggleMenu } from './player.js'; // Import toggleMenu
 // Create an audio context using the Web Audio API
-const audioCtx = new AudioContext() 
+const audioCtx = new AudioContext()
 const canvas = document.getElementById('canvas-sound')
 canvas.width = window.innerWidth
 canvas.height = window.innerHeight
@@ -38,27 +39,50 @@ export function initVisualizer(audioElement) {
 function animate() {
     const bufferLength = analyser.frequencyBinCount
     const dataArray = new Uint8Array(bufferLength)
-    const barWidth = (canvas.width) / bufferLength
+    const barWidth = (canvas.width) / (canvas.width-bufferLength)  
     let barHeight
     let x = 0
     requestAnimationFrame(animate) //Request the next frame first
     ctx.clearRect(0, 0, canvas.width, canvas.height) // Clear the canvas
-    analyser.getByteFrequencyData(dataArray) // Get the latest data
-    drawVisualizer(bufferLength, x, barWidth, barHeight, dataArray) //Draw the visualizer
+
+    if (!toggleMenu.classList.contains('active')) {
+        analyser.getByteFrequencyData(dataArray) // Get the latest data
+        drawVisualizer(bufferLength, x, barWidth, barHeight, dataArray) //Draw the visualizer
+    }
 }
 
 // Draw the visualizer on the canvas
 function drawVisualizer(bufferLength, x, barWidth, barHeight, dataArray) {
     for(let i = 0; i < bufferLength; i++) {
-        barHeight = dataArray[i] * 2
+        barHeight = dataArray[i] * 1.4
+        let y = 2
         ctx.save()
         ctx.translate(canvas.width/2, canvas.height/2)
         ctx.rotate(i * Math.PI / 45)
-        const red = i * barHeight / 20
-        const green = i
-        const blue = i * barHeight / 3
-        ctx.fillStyle = `rgb(${red}, ${green}, ${blue})`
+        const red = 220
+        const green = 210
+        const blue = 220
+        ctx.fillStyle = `rgb(${red}, ${green}, ${blue}, 28%)`
+        // ctx.strokeStyle = 'rgb(255 255 255/ 100%)'
         ctx.fillRect(0, 0, barWidth, barHeight)
+        // ctx.fillStyle = 'rgb(250 250 250/ 50%)'
+        
+        x += barWidth
+        ctx.restore()
+    }
+
+    for(let i = 0; i < bufferLength; i++) {
+        barHeight = dataArray[i] * 1.4
+        let y = 8
+        ctx.save()
+        ctx.translate(canvas.width/2, canvas.height/2)
+        ctx.rotate(i * Math.PI / 33)
+        const red = 255
+        const green = 250
+        const blue = 230
+        ctx.fillStyle = `rgb(${red}, ${green}, ${blue}, 100%)`
+        ctx.fillRect(barWidth+y, barHeight+y, 1, 1)
+        // ctx.fillStyle = 'rgb(250 250 250/ 50%)'
         x += barWidth
         ctx.restore()
     }
@@ -69,8 +93,8 @@ function drawVisualizer(bufferLength, x, barWidth, barHeight, dataArray) {
     //     ctx.translate(canvas.width/2, canvas.height/2)
     //     ctx.rotate(i * Math.PI / -90)
     //     const red = i * barHeight / 20
-    //     const green = i * 4
-    //     const blue = barHeight / 3
+    //     const green = i
+    //     const blue = i * barHeight / 3
     //     ctx.fillStyle = 'rgb(' + red + ',' + green + ', ' + blue + ')'
     //     ctx.fillRect(0, 0, barWidth, barHeight)
     //     x += barWidth
