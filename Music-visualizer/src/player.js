@@ -1,11 +1,12 @@
-import { initVisualizer } from './visualizer.js'; // Import the initVisualizer function
+import { initVisualizer } from './visualizer.js';
+// import ColorThief from 'colorthief';
 
 const trackList = [
     {
-        name: "Beat Mekanik",
-        artist: "Super Sonic",
-        album: "Beat Mekanik",
-        src: "src/assets/music/BeatMekanik.mp3",
+        name: "Angel",
+        artist: "Massive Attack",
+        album: "Mezzanine",
+        src: "src/assets/music/Angel.m4a",
         cover: "src/assets/cover/1.jpeg",
         albumCover: "src/assets/album_cover/1.jpeg"
     },
@@ -34,12 +35,12 @@ const trackList = [
         albumCover: "src/assets/album_cover/4.jpeg"
     },
     {
-        name: "Midnight Blues",
-        artist: "Piotr Hummel",
-        album: "Midnight Blues",
-        src: "src/assets/music/MidnightBlues.mp3",
-        cover: "src/assets/cover/5.jpeg",
-        albumCover: "src/assets/album_cover/5.jpeg"
+        name: "Teardrop",
+        artist: "Massive Attack",
+        album: "Mezzanine",
+        src: "src/assets/music/teardop.m4a",
+        cover: "src/assets/cover/1.jpeg",
+        albumCover: "src/assets/album_cover/1.jpeg"
     },
     ]
 
@@ -68,7 +69,7 @@ export let song = new Audio() // Export the song object
 export let currentSong = 0
 let playing = false
 
-let audioCtxInstance; // Declare variable to hold audio context
+let audioCtxInstance;
 
 document.addEventListener('DOMContentLoaded', () => {
     loadSong(currentSong)
@@ -168,6 +169,7 @@ function seek(e) {
     fillBar.style.width = `${(pos / song.duration) * 100}%`
 }
 
+
 function toggleMenuVisibility() {
     toggleMenu.classList.toggle('active')
     searchContainer.classList.toggle('hidden-search')
@@ -176,12 +178,26 @@ function toggleMenuVisibility() {
         document.body.classList.add('menu-open'); // Add class to body
         const currentSongUrl = trackList[currentSong].albumCover
         backgroundImageDiv.style.backgroundImage = `url(${currentSongUrl})` // Set background on the new div
+         // Call function to update background color
     }
     else {
         document.body.classList.remove('menu-open'); // Remove class from body
-        backgroundImageDiv.style.backgroundImage = '' // Clear background on the new div
+        backgroundImageDiv.style.backgroundImage = ''; // Clear background when menu is closed
     }
 }
+
+// Function to extract color and set background
+// function updateBackgroundColor() {
+//     if (menuCover.complete) {
+//         const color = colorThief.getColor(trackList[currentSong].albumCover);
+//         backgroundImageDiv.style.backgroundImage = `rgb(${color[1]}, ${color[1]}, ${color[2]})`;
+//     } else {
+//         menuCover.addEventListener('load', function() {
+//             const color = colorThief.getColor(menuCover);
+//             backgroundImageDiv.style.backgroundImage = `rgb(${color[0]}, ${color[1]}, ${color[2]})`;
+//         });
+//     }
+// }
 
 function searchInputVisibility() {
     searchInput.classList.toggle('active')

@@ -37,9 +37,9 @@ body {
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
-    background-color: black;
+    background-color: rgb(1, 1, 1);
     z-index: -1; /* Place behind container content */
-    transition: filter 0.5s ease; /* Add transition for smooth filter change */
+    /* transition: filter 0.5s ease; */
 }
 
 #canvas-sound {
@@ -278,6 +278,7 @@ nav #search-query.active {
     background-size: contain;
     background-position: center;
     background-repeat: no-repeat;
+    box-shadow: 1px 0px 5px rgba(181, 181, 181, 0.578);
 }
 
 .toggle-info{
@@ -328,5 +329,5 @@ nav #search-query.active {
 
 /* Filter for container when menu is open */
 .menu-open #background-image {
-    filter: brightness(50%) contrast(80%); /* Apply filter to the background image div */
+    filter: brightness(26%) contrast(97%); /* Apply filter to the background image div */
 }
