@@ -37,9 +37,9 @@ body {
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
-    background-color: black;
+    background-color: rgb(1, 1, 1);
     z-index: -1; /* Place behind container content */
-    transition: filter 0.5s ease; /* Add transition for smooth filter change */
+    /* transition: filter 0.5s ease; */
 }
 
 #canvas-sound {
@@ -58,16 +58,27 @@ nav {
     position: relative;
     z-index: 101;
     gap: 10px;
+    display: flex;
+    justify-content: space-between;
+}
+
+nav .user {
+    /* background-color: #fff; */
+    width: 10%;
+    margin: 10px 5px;
+    font-size: 20px;
+
 }
 
 nav #search-container {
+    /* background-color: #132a94; */
     width: 40%; 
-    height: 40vh; 
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     justify-content: flex-start;
     z-index: 100;
+    position: relative;
 }
 
 .search-input-container {
@@ -91,16 +102,19 @@ nav #search-result-template {
     
 }
 
-nav #search-query.active {
+nav #search-query {
     display: block;
     width: 70%; 
     height: 80%;
     border: 1px solid gray;
     border-radius: 30px;
-    transition: margin-right 2s ease-in-out;
     padding: 10px;
     font-size: 16px;
     background-color: rgba(144, 59, 109, 0.47);
+}
+
+nav #search-query:focus {
+    outline: none;
 }
 
 #player-container {
@@ -268,6 +282,9 @@ nav #search-query.active {
     height: 100%;
     /* background: #303030; */
     margin: 20px 20px;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
     
 }
 
@@ -275,9 +292,10 @@ nav #search-query.active {
     width: 200px;
     height: 200px;
     /* background-color: red; */
-    background-size: contain;
+    background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
+    box-shadow: 1px 0px 5px rgba(181, 181, 181, 0.578);
 }
 
 .toggle-info{
@@ -292,6 +310,9 @@ nav #search-query.active {
 
 /* Styles for search results container */
 #search-results {
+    position: absolute;
+    top: 100%;
+    left: 0;
     width: 100%; /* Make search results take full width of container */
     max-height: 200px; /* Add a max height and make it scrollable if needed */
     overflow-y: auto;
@@ -328,5 +349,5 @@ nav #search-query.active {
 
 /* Filter for container when menu is open */
 .menu-open #background-image {
-    filter: brightness(50%) contrast(80%); /* Apply filter to the background image div */
+    filter: brightness(26%) contrast(97%); /* Apply filter to the background image div */
 }
