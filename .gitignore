@@ -30,3 +30,9 @@ venv/
 
 # Database
 db.sqlite3
+
+# Environment variables
+.env
+
+# Disabled git directory
+.git_disabled/
