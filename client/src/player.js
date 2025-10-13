@@ -63,7 +63,7 @@ export async function initializeApp() {
   }
 
   loginBtn.addEventListener("click", () => {
-    window.location.href = "http://127.0.0.1:8000/login";
+    window.location.href = "/api/login";
   });
 
   try {

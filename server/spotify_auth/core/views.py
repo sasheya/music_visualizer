@@ -94,7 +94,7 @@ def callback(request):
     request.session.save()
     
     session_id = request.session.session_key
-    redirect_url = f"http://localhost:5173/?session_id={session_id}"
+    redirect_url = f"/?session_id={session_id}"
     return redirect(redirect_url)
 
 def refresh_token(request):
